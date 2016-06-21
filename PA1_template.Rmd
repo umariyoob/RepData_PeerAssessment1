@@ -20,12 +20,31 @@ names(activity)
 
 ```{r}
 library(lattice)
+
 activity$date <- as.Date(activity$date, "%Y-%m-%d")
+activity$interval <- as.factor(activity$interval)
 ```
 
 ## What is mean total number of steps taken per day?
 
+Let's use the aggregate function for this.
+```{r}
+StepsTaken <- aggregate(steps ~ date, data = activity, sum,na.rm = TRUE)
+```
 
+We can view a bar chart for this now
+```{r}
+hist(StepsTaken$steps,main = "Total number of Steps taken by Day",xlab="Steps",ylab = "Days", col="blue")
+```
+
+In order to find the mean, we can just use the mean function on the steps column
+```{r}
+meanSteps <- mean(StepsTaken$steps,na.rm=TRUE)
+medianSteps <- median(StepsTaken$steps,na.rm=TRUE)
+```
+
+
+The Mean is `r round(meanSteps,1)` and the median is `r medianSteps`.
 
 ## What is the average daily activity pattern?
 
